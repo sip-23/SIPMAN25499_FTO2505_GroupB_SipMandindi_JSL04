@@ -61,6 +61,11 @@ const taskStatusInput = document.getElementById('task-status');
 let currentTask = null;
 
 // Create task function
+/**
+ * Creates the list element and its respective / relevent classes in the DOM.
+ * @param {Object} task - The tasks which are stored in an array and declared as tasks
+ * @returns {HTMLLIElement} - The created list item elements
+ */
 function createTaskElement(task) {
     const taskElementCreated = document.createElement("li");
     taskElementCreated.className = 'task mt-4 py-5 px-3 mr-2 w-max-[320px] xl:w-[280px] h-[60px] bg-white rounded-lg shadow-[0px_4px_6px_0px_rgba(54,78,126,0.1)] transition-all hover:shadow-md';
@@ -71,6 +76,10 @@ function createTaskElement(task) {
 
 // Showing the task
 // Implemented function to show all tasks once the script is running on the main section
+/**
+ * First cleans the HTML Elements and then Shows or Renders the tasks from the given array to the respactive columns in the DOM
+ * 
+ */
 function showSortedTasks() {
     // Clear all columns
     todoTasks.innerHTML = '';
@@ -93,11 +102,30 @@ function showSortedTasks() {
                 break;
         }
     });
+
+    // Update task counts in column headers
+    updateTaskCounts();
+
+}
+
+// Update the task counts in each column header
+/**
+ * Selects the Element container with the specified id and select the last child of the target parent and gives it the value of length of the Elements in that column
+ */
+function updateTaskCounts() {
+  document.querySelector('#todo-column span:last-child').textContent = `(${todoTasks.children.length})`;
+  document.querySelector('#doing-column span:last-child').textContent = `(${doingTasks.children.length})`;
+  document.querySelector('#done-column span:last-child').textContent = `(${doneTasks.children.length})`;
 }
 
 
 
 // Function to open modal with task data
+/**
+ * Matches the Id of the selected task provides the information in the modal.
+ * @param {number} taskId - Is the ID of the selected
+ * @returns A modal that is populated with the informtion that the corresponds to the matched ID
+ */
 function openEditModal(taskId) {
     currentTask = tasks.find(task => task.id === taskId);
     
@@ -114,12 +142,21 @@ function openEditModal(taskId) {
 }
 
 // Function to close modal
+/**
+ * Closes the task modal and resets the current task variable declared
+ * Add the Hidden class to allow the modal to dissapear once it is closed
+ */
 function closeModal() {
     modal.classList.add('hidden');
     currentTask = null;
 }
 
 // Save task changes
+/**
+ * This allos changes to be made in modal to be savd
+ * @param {Event} e - Is the submit event from the form before
+ * @returns 
+ */
 function saveTaskChanges(e) {
     e.preventDefault();
     
@@ -136,6 +173,11 @@ function saveTaskChanges(e) {
 }
 
 // Event Listeners
+/**
+ * Sets up event listener for the selected task that is triggered by a click
+ * This will also open the edit model.
+ * 
+ */
 function setupEventListeners() {
     // Event delegation for task clicks
     [todoTasks, doingTasks, doneTasks].forEach(column => {
@@ -164,6 +206,9 @@ function setupEventListeners() {
 }
 
 // Initialize the board initially there was 8 now there will be 6
+/**
+ * init function is the main functon that has mor functions within the function
+ */
 function init() {
     showSortedTasks();
     setupEventListeners();
