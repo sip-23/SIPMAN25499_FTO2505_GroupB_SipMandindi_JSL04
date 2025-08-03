@@ -1,4 +1,4 @@
-const initialTasks = [
+const tasks = [
   {
     id: 1,
     title: "Launch Epic Career 🚀",
